@@ -40,14 +40,7 @@ const Dashboard: React.FC = () => {
       change: '+8%',
       changeType: 'positive' as const
     },
-    {
-      title: 'Solicitudes Pendientes',
-      value: requisitions.filter(r => r.status === 'pending').length,
-      icon: Calendar,
-      color: 'bg-yellow-500',
-      change: '-5%',
-      changeType: 'negative' as const
-    },
+    
    
   ];
 

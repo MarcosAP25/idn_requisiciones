@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Requisition } from '../types';
+import toast from 'react-hot-toast';
 
 //creacion del contexto
 
@@ -46,22 +47,60 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const addUser = (userData: Omit<User, 'id' | 'createdAt'>) => {
-    const newUser: User = {
-      ...userData,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
-    };
-    setUsers(prev => [...prev, newUser]);
+
+    fetch("http://localhost:3000/users",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setUsers((prev) => [...prev, data]);
+      toast.success('Usuario creado correctamente.');
+    }).catch((error) => {
+      toast.error('Error al crear el usuario.');
+    })
+
+
   };
 
   const updateUser = (id: string, userData: Partial<User>) => {
-    setUsers(prev => prev.map(user => 
-      user.id === id ? { ...user, ...userData } : user
-    ));
+    // setUsers(prev => prev.map(user => 
+    //   user.id === id ? { ...user, ...userData } : user
+    // ));
+
+    fetch(`http://localhost:3000/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setUsers((prev) => prev.map((user) => (user.id === id ? data : user)));
+      toast.success('Usuario actualizado correctamente.');
+    }).catch((error) => {
+      toast.error('Error al actualizar el usuario.');
+    });
   };
 
   const deleteUser = (id: string) => {
-    setUsers(prev => prev.filter(user => user.id !== id));
+    // setUsers(prev => prev.filter(user => user.id !== id));
+
+    fetch(`http://localhost:3000/users/${id}`, {
+      method: "DELETE",
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setUsers((prev) => prev.filter((user) => user.id !== id));
+      toast.success('Usuario eliminado correctamente.');
+    }).catch((error) => {
+      toast.error('Error al eliminar el usuario.');
+    });
+
   };
 
   const addRequisition = (reqData: Omit<Requisition, 'id' | 'number' | 'createdAt'>) => {

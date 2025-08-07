@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Plus, Search, Edit, Trash2, Eye, X } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import { User } from '../types';
+import toast from 'react-hot-toast';
 
 const UserManagement: React.FC = () => {
+
   const { users, addUser, updateUser, deleteUser } = useData();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
@@ -13,7 +15,7 @@ const UserManagement: React.FC = () => {
     email: '',
     password: '',
     role: 'user' as 'admin' | 'user',
-    status: 'active' as 'active' | 'inactive',
+    status: 1 as 'active' |  2 as 'inactive',
   });
 
   const filteredUsers = users.filter(user =>
@@ -39,7 +41,7 @@ const UserManagement: React.FC = () => {
       email: '',
       password: '',
       role: 'user',
-      status: 'active',
+      status: 1,
     });
   };
 
@@ -56,9 +58,15 @@ const UserManagement: React.FC = () => {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('¿Está seguro de que desea eliminar este usuario?')) {
-      deleteUser(id);
-    }
+    toast((t) => (
+      <span>
+        ¿Está seguro de que desea eliminar este usuario?
+        <div className="mt-2 flex gap-2">
+          <button className="bg-red-500 text-white px-3 py-1 rounded-md" onClick={() => { deleteUser(id); toast.dismiss(t.id); }}>Eliminar</button>
+          <button className="bg-gray-300 px-3 py-1 rounded-md" onClick={() => toast.dismiss(t.id)}>Cancelar</button>
+        </div>
+      </span>
+    ));
   };
 
   return (
@@ -141,9 +149,9 @@ const UserManagement: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                      user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      user.status === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                     }`}>
-                      {user.status === 'active' ? 'Activo' : 'Inactivo'}
+                      {user.status === 0 ? 'Activo' : 'Inactivo'}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -259,8 +267,8 @@ const UserManagement: React.FC = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 >
-                  <option value="active">Activo</option>
-                  <option value="inactive">Inactivo</option>
+                  <option value="1">Activo</option>
+                  <option value="0">Inactivo</option>
                 </select>
               </div>
 
@@ -278,6 +286,8 @@ const UserManagement: React.FC = () => {
                 >
                   Cancelar
                 </button>
+
+                
               </div>
             </form>
           </div>

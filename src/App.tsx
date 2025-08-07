@@ -9,6 +9,7 @@ import RequisitionForm from './pages/RequisitionForm';
 import RequestsList from './pages/RequestsList';
 import UserManagement from './pages/UserManagement';
 import CompanyInfo from './pages/CompanyInfo';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -69,6 +70,10 @@ function App() {
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Router>
+        <Toaster
+                  position="bottom-right"
+                  reverseOrder={false}
+                />
       </DataProvider>
     </AuthProvider>
   );

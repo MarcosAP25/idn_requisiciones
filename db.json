@@ -1,14 +1,23 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "admin",
-            "password": "admin123",
-            "email": "admin@dni.gob.do",
-            "rol":"admin",
-            "status":1,
-            "created_at": "2025-08-06"
-        }
-    ],
-    "requisitions": []
+  "users": [
+    {
+      "id": 1,
+      "name": "Marcos Almonte",
+      "password": "admin123",
+      "email": "admin@dni.gob.do",
+      "role": "admin",
+      "status": 1,
+      "created_at": "2025-08-06"
+    },
+    {
+      "id": "fe30",
+      "name": "Pedro Pascal",
+      "password": "user123",
+      "email": "ppascal@dni.gob.do",
+      "role": "user",
+      "status": 1,
+      "created_at": "2025-08-07"
+    }
+  ],
+  "requisitions": []
 }
