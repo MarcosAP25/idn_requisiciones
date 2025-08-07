@@ -1,120 +1,49 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Requisition } from '../types';
 
-interface DataContextType {
-  users: User[];
-  requisitions: Requisition[];
-  addUser: (user: Omit<User, 'id' | 'createdAt'>) => void;
-  updateUser: (id: string, user: Partial<User>) => void;
-  deleteUser: (id: string) => void;
-  addRequisition: (requisition: Omit<Requisition, 'id' | 'number' | 'createdAt'>) => void;
-  updateRequisition: (id: string, requisition: Partial<Requisition>) => void;
-  deleteRequisition: (id: string) => void;
-}
-
-// Mock data
-const mockUsers: User[] = [
-  {
-    id: '1',
-    name: 'Juan Pérez',
-    email: 'admin@dni.gov.do',
-    password: 'admin123',
-    role: 'admin',
-    status: 'active',
-    createdAt: '2024-01-01T00:00:00Z',
-  },
-  {
-    id: '2',
-    name: 'María García',
-    email: 'maria@dni.gov.do',
-    password: 'user123',
-    role: 'user',
-    status: 'active',
-    createdAt: '2024-01-02T00:00:00Z',
-  },
-  {
-    id: '3',
-    name: 'Carlos Rodríguez',
-    email: 'carlos@dni.gov.do',
-    password: 'user123',
-    role: 'user',
-    status: 'active',
-    createdAt: '2024-01-03T00:00:00Z',
-  }
-];
-
-const mockRequisitions: Requisition[] = [
-  {
-    id: '1',
-    number: 'REQ-2024-001',
-    requestDate: '2024-01-15',
-    receptionDate: '2024-01-16',
-    department: 'Recursos Humanos',
-    section: 'Reclutamiento',
-    unit: 'Selección',
-    position: 'Analista de RRHH',
-    quantity: 1,
-    recruitmentType: 'civil',
-    recruitmentCause: 'Creacion',
-    substitutes: 'N/A',
-    internalCandidate: 'Ninguno',
-    schedule: '8:00 AM - 5:00 PM',
-    academicLevel: 'Licenciatura en Psicología o afín',
-    specialStudies: 'Especialización en RRHH',
-    workExperience: '2 años en reclutamiento',
-    languages: 'Español, Inglés intermedio',
-    softwareSkills: 'MS Office, HRIS',
-    otherKnowledge: 'Conocimiento en legislación laboral',
-    positionObjective: 'Gestionar procesos de reclutamiento y selección',
-    dependentPositions: 'Asistente de RRHH',
-    requiredEquipment: 'Computadora, teléfono, impresora',
-    createdBy: '1',
-    status: 'pending',
-    createdAt: '2024-01-15T10:30:00Z',
-  },
-  {
-    id: '2',
-    number: 'REQ-2024-002',
-    requestDate: '2024-02-01',
-    receptionDate: '2024-02-02',
-    department: 'Tecnología',
-    section: 'Desarrollo',
-    unit: 'Backend',
-    position: 'Desarrollador Senior',
-    quantity: 2,
-    recruitmentType: 'civil',
-    recruitmentCause: 'Incremento de labores',
-    substitutes: 'N/A',
-    internalCandidate: 'Ninguno',
-    schedule: '9:00 AM - 6:00 PM',
-    academicLevel: 'Ingeniería en Sistemas',
-    specialStudies: 'Certificaciones en tecnologías web',
-    workExperience: '5 años en desarrollo web',
-    languages: 'Español, Inglés avanzado',
-    softwareSkills: 'Java, Spring Boot, PostgreSQL',
-    otherKnowledge: 'Metodologías ágiles, DevOps',
-    positionObjective: 'Desarrollar y mantener aplicaciones backend',
-    dependentPositions: 'Desarrollador Junior',
-    requiredEquipment: 'Laptop, monitor adicional',
-    createdBy: '2',
-    status: 'approved',
-    createdAt: '2024-02-01T14:20:00Z',
-  }
-];
+//creacion del contexto
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
-export const useData = () => {
-  const context = useContext(DataContext);
-  if (context === undefined) {
-    throw new Error('useData must be used within a DataProvider');
-  }
-  return context;
-};
+//Creacion del provider
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [users, setUsers] = useState<User[]>(mockUsers);
-  const [requisitions, setRequisitions] = useState<Requisition[]>(mockRequisitions);
+  const [users, setUsers] = useState<User[]>([]);
+  const [requisitions, setRequisitions] = useState<Requisition[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  useEffect(()=> {
+    const fetchDataUser = async () => {
+      try{
+        const response = await fetch('http://localhost:3000/users');
+
+        if(!response.ok){
+          throw new Error('Failed to fetch users');
+        };
+
+        const data = await response.json();
+        setUsers(data);
+
+      }catch(error){
+          if(error instanceof Error){
+            //Instancia de error
+            setError(error.message);
+          } else if(typeof error === 'string'){
+            //String de error
+            setError(error);
+          } else{
+            setError('Unknown error');
+          }
+      }finally{
+        setIsLoading(false);
+      }
+    };
+
+    //Ejecuto mis funciones
+    fetchDataUser();
+  }, []);
 
   const addUser = (userData: Omit<User, 'id' | 'createdAt'>) => {
     const newUser: User = {
@@ -170,3 +99,27 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     </DataContext.Provider>
   );
 };
+
+//Creacion del hook
+
+
+export const useData = () => {
+  const context = useContext(DataContext);
+  if (context === undefined) {
+    throw new Error('useData must be used within a DataProvider');
+  }
+  return context;
+};
+
+//Tipos internos
+
+interface DataContextType {
+  users: User[];
+  requisitions: Requisition[];
+  addUser: (user: Omit<User, 'id' | 'createdAt'>) => void;
+  updateUser: (id: string, user: Partial<User>) => void;
+  deleteUser: (id: string) => void;
+  addRequisition: (requisition: Omit<Requisition, 'id' | 'number' | 'createdAt'>) => void;
+  updateRequisition: (id: string, requisition: Partial<Requisition>) => void;
+  deleteRequisition: (id: string) => void;
+}

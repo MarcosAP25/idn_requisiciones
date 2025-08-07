@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
   const stats = [
     {
       title: 'Usuarios Registrados',
-      value:  0, //users.length,
+      value:  users.length, //users.length,
       icon: Users,
       color: 'bg-blue-500',
       change: '0%',

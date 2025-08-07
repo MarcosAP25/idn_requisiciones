@@ -4,7 +4,6 @@ export interface User {
   email: string;
   password: string;
   role: 'admin' | 'user';
-  photo?: string;
   status: 'active' | 'inactive';
   createdAt: string;
 }
