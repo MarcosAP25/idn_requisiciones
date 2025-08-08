@@ -10,14 +10,42 @@
       "created_at": "2025-08-06"
     },
     {
-      "id": "fe30",
-      "name": "Pedro Pascal",
-      "password": "user123",
+      "name": "Pedro Pascal gutierrez",
       "email": "ppascal@dni.gob.do",
+      "password": "",
       "role": "user",
       "status": 1,
-      "created_at": "2025-08-07"
+      "id": "fe30"
     }
   ],
-  "requisitions": []
+  "requisitions": [
+    {
+      "id": "1754676538204",
+      "number": "REQ-2025-001",
+      "requestDate": "2025-08-08",
+      "receptionDate": "",
+      "department": "Tecnolgoia",
+      "section": "Programacion",
+      "unit": "Tecnologia",
+      "position": "Programador",
+      "quantity": 1,
+      "recruitmentType": "civil",
+      "recruitmentCause": "Creacion",
+      "substitutes": "",
+      "internalCandidate": "",
+      "schedule": "8:00AM - 4:00PM",
+      "academicLevel": "Bachiller",
+      "specialStudies": "",
+      "workExperience": "3 Años de experiencia en flutter",
+      "languages": "",
+      "softwareSkills": "",
+      "otherKnowledge": "",
+      "positionObjective": "Desarrollar app mviles",
+      "dependentPositions": "",
+      "requiredEquipment": "",
+      "createdAt": "2025-08-08T18:08:58.204Z",
+      "createdBy": "",
+      "status": "approved"
+    }
+  ]
 }

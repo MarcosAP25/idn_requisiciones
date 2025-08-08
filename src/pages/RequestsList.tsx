@@ -50,30 +50,66 @@ const RequestsList: React.FC = () => {
         <html>
           <head>
             <title>Requisición ${requisition.number}</title>
-            <style>
-              body { font-family: Arial, sans-serif; margin: 20px; }
-              .header { text-align: center; margin-bottom: 30px; }
-              .section { margin-bottom: 20px; }
-              .field { margin-bottom: 10px; }
-              .label { font-weight: bold; }
-            </style>
+            <link href="/dist/index.css" rel="stylesheet">
+           
           </head>
-          <body>
-            <div class="header">
-              <h1>Departamento Nacional de Investigación</h1>
-              <h2>Recursos Humanos</h2>
-              <h3>REQUISICIÓN DE PERSONAL</h3>
-              <p>Número: ${requisition.number}</p>
+          <body class="p-10 font-sans">
+          <div class="text-center mb-8">
+            <h1 class="text-xl font-bold">Departamento Nacional de Investigación</h1>
+            <h2 class="text-lg">Recursos Humanos</h2>
+            <h3 class="text-md font-semibold">REQUISICIÓN DE PERSONAL</h3>
+            <p><span class="font-bold text-gray-700">Número:</span> <span class="px-2 py-1 border border-gray-300 rounded">${requisition.number}</span></p>
+          </div>
+
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+            <div class="grid grid-cols-3 gap-8 mb-4">
+              <div>
+                <span class="block font-bold text-gray-700">Fecha de solicitud</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.requestDate}</span>
+              </div>
+              <div>
+                <span class="block font-bold text-gray-700">Departamento</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.department}</span>
+              </div>
+              <div>
+                <span class="block font-bold text-gray-700">Puesto</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.position}</span>
+              </div>
             </div>
-            <div class="section">
-              <h3>Datos de Solicitud</h3>
-              <div class="field"><span class="label">Fecha de solicitud:</span> ${requisition.requestDate}</div>
-              <div class="field"><span class="label">Departamento:</span> ${requisition.department}</div>
-              <div class="field"><span class="label">Puesto:</span> ${requisition.position}</div>
-              <div class="field"><span class="label">Cantidad:</span> ${requisition.quantity}</div>
+
+            <div class="grid grid-cols-3 gap-8 mb-4">
+              <div>
+                <span class="block font-bold text-gray-700">Cantidad</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.quantity ?? ''}</span>
+              </div>
+              <div>
+                <span class="block font-bold text-gray-700">Motivo</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.reason ?? ''}</span>
+              </div>
+              <div>
+                <span class="block font-bold text-gray-700">Tipo de Contrato</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.contractType ?? ''}</span>
+              </div>
             </div>
-            <script>window.print();</script>
-          </body>
+
+            <div class="grid grid-cols-3 gap-8">
+              <div>
+                <span class="block font-bold text-gray-700">Sueldo</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.salary ?? ''}</span>
+              </div>
+              <div>
+                <span class="block font-bold text-gray-700">Horario</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.schedule ?? ''}</span>
+              </div>
+              <div>
+                <span class="block font-bold text-gray-700">Observaciones</span>
+                <span class="block px-3 py-2 border border-gray-300 rounded">${requisition.observations ?? ''}</span>
+              </div>
+            </div>
+          </div>
+
+          <script>window.print();</script>
+        </body>
         </html>
       `);
       printWindow.document.close();
@@ -183,9 +219,6 @@ const RequestsList: React.FC = () => {
                   Puesto
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Estado
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
@@ -204,16 +237,6 @@ const RequestsList: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {req.position}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                      req.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                      req.status === 'approved' ? 'bg-green-100 text-green-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {req.status === 'pending' ? 'Pendiente' :
-                       req.status === 'approved' ? 'Aprobada' : 'Rechazada'}
-                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center space-x-2">

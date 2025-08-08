@@ -33,7 +33,7 @@ export interface Requisition {
   dependentPositions: string;
   requiredEquipment: string;
   createdBy: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: string;
   createdAt: string;
 }
 

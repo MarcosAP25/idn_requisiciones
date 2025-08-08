@@ -16,6 +16,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 
   useEffect(()=> {
+
+    //Obtengo los usuarios guardados
     const fetchDataUser = async () => {
       try{
         const response = await fetch('http://localhost:3000/users');
@@ -42,8 +44,38 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     };
 
+    //Obtengo las requisiones guardadas
+    const fecthDataRequisition = async () => {
+      try{
+        const response = await fetch('http://localhost:3000/requisitions');
+
+        if(!response.ok){
+          throw new Error('Failed to fetch requisitions');
+        };
+
+        const data = await response.json();
+        setRequisitions(data);
+
+      }catch(error){
+          if(error instanceof Error){
+            //Instancia de error
+            setError(error.message);
+            toast.error(error.message);
+          } else if(typeof error === 'string'){
+            //String de error
+            setError(error);
+            toast.error(error);
+          } else{
+            setError('Unknown error');
+            toast.error('Ha ocurrido un error al obtener las requisiones.');
+          }
+      }finally{
+        setIsLoading(false);
+      }
+    }
     //Ejecuto mis funciones
     fetchDataUser();
+    fecthDataRequisition();
   }, []);
 
   const addUser = (userData: Omit<User, 'id' | 'createdAt'>) => {
@@ -107,10 +139,26 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const newRequisition: Requisition = {
       ...reqData,
       id: Date.now().toString(),
-      number: `REQ-2024-${String(requisitions.length + 1).padStart(3, '0')}`,
+      number: `REQ-2025-${String(requisitions.length + 1).padStart(3, '0')}`,
       createdAt: new Date().toISOString(),
     };
-    setRequisitions(prev => [...prev, newRequisition]);
+
+    fetch("http://localhost:3000/requisitions",{
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newRequisition),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setRequisitions((prev) => [...prev, data]);
+      toast.success('Requisición creada correctamente.');
+    }).catch((error) => {
+      toast.error('Error al crear el usuario.');
+    })
+
+    
   };
 
   const updateRequisition = (id: string, reqData: Partial<Requisition>) => {

@@ -13,7 +13,7 @@ const CompanyInfo: React.FC = () => {
         {/* Header with Logo */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-12 text-center">
           <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
-            <Building2 className="w-12 h-12 text-blue-600" />
+            <img src="/images/dni_logo.png" alt="" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">
             Departamento Nacional de Investigación
@@ -170,7 +170,7 @@ const CompanyInfo: React.FC = () => {
               <Calendar className="w-4 h-4" />
               <span className="text-sm">Última actualización: 2021-03-04 11:10:56</span>
             </div>
-            <p className="text-sm text-gray-500 mt-2">Actualizado por: -</p>
+            <p className="text-sm text-gray-500 mt-2">Actualizado por: - Natanael Capellan</p>
           </div>
         </div>
       </div>

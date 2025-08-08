@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
     },
     {
       title: 'Total de solicitudes',
-      value: totalThisYear,
+      value: requisitions.length,
       icon: FileText,
       color: 'bg-green-500',
       change: '+8%',

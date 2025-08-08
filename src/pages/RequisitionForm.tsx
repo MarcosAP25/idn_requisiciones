@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { Building2, Save, FileText } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import { useAuth } from '../context/AuthContext';
+import FormField from '../components/Form/FormField';
+import { Requisition } from '../types';
 
 const RequisitionForm: React.FC = () => {
-  const { addRequisition } = useData();
-  const { user } = useAuth();
-  const [formData, setFormData] = useState({
+
+  const requestDate: string = new Date().toISOString().split('T')[0];
+  const blankRequisition: Requisition = {
+    id:' 1',
+    number: '',
     requestDate: new Date().toISOString().split('T')[0],
     receptionDate: '',
     department: '',
@@ -28,7 +32,14 @@ const RequisitionForm: React.FC = () => {
     positionObjective: '',
     dependentPositions: '',
     requiredEquipment: '',
-  });
+    createdAt: new Date().toISOString().split('T')[0],
+    createdBy: '',
+    status: 'approved',
+  };
+
+  const { addRequisition } = useData();
+  const { user } = useAuth();
+  const [formData, setFormData]  = useState<Requisition>(blankRequisition);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -38,42 +49,19 @@ const RequisitionForm: React.FC = () => {
       ...prev,
       [name]: type === 'number' ? parseInt(value) || 0 : value
     }));
+
+    
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (user) {
-      addRequisition({
-        ...formData,
-        createdBy: user.id,
-        status: 'pending',
-      });
+      addRequisition(formData);
       setIsSubmitted(true);
       setTimeout(() => {
         setIsSubmitted(false);
-        setFormData({
-          requestDate: new Date().toISOString().split('T')[0],
-          receptionDate: '',
-          department: '',
-          section: '',
-          unit: '',
-          position: '',
-          quantity: 1,
-          recruitmentType: 'civil',
-          recruitmentCause: '',
-          substitutes: '',
-          internalCandidate: '',
-          schedule: '',
-          academicLevel: '',
-          specialStudies: '',
-          workExperience: '',
-          languages: '',
-          softwareSkills: '',
-          otherKnowledge: '',
-          positionObjective: '',
-          dependentPositions: '',
-          requiredEquipment: '',
-        });
+        setFormData(blankRequisition);
       }, 2000);
     }
   };
@@ -103,7 +91,7 @@ const RequisitionForm: React.FC = () => {
         {/* Header */}
         <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100 text-center">
           <div className="flex items-center justify-center mb-4 ">
-            <img src="/images/dni_logo.png" alt="" className='w-48 h-48'/>
+            <img src="/images/dni_logo.png" alt="" className='w-32 h-32'/>
           </div>   
 
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -115,7 +103,10 @@ const RequisitionForm: React.FC = () => {
 
         {/* Datos de Solicitud */}
         <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
-          <h3 className="text-xl font-bold text-gray-900 mb-6">Datos de Solicitud</h3>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+           <h3 className="text-xl font-bold text-gray-900 mb-6">Datos de Solicitud</h3>
+           {/* <h3 className="text-lg text-gray-400 mb-6 justify-self-end">Fecha de la solicitud: {formData.requestDate}</h3> */}
+         </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
@@ -132,90 +123,51 @@ const RequisitionForm: React.FC = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Fecha de Recepción *
-              </label>
-              <input
-                type="date"
-                name="receptionDate"
-                value={formData.receptionDate}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.department}
+              title="Departamento *"
+              type="text"
+              name="department"
+              required={true}
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Departamento *
-              </label>
-              <input
-                type="text"
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.section}
+              title="Sección *"
+              type="text"
+              name="section"
+              required={true}
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Sección *
-              </label>
-              <input
-                type="text"
-                name="section"
-                value={formData.section}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.unit}
+              title="Unidad *"
+              type="text"
+              name="unit"
+              required={true}
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Unidad *
-              </label>
-              <input
-                type="text"
-                name="unit"
-                value={formData.unit}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.position}
+              title="Puesto *"
+              type="text"
+              name="position"
+              required={true}
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Puesto *
-              </label>
-              <input
-                type="text"
-                name="position"
-                value={formData.position}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Cantidad *
-              </label>
-              <input
-                type="number"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                min="1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.quantity}
+              title="Cantidad *"
+              type="number"
+              name="quantity"
+              required={true}
+              min='1'
+            />
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -251,46 +203,33 @@ const RequisitionForm: React.FC = () => {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Sustituye a
-              </label>
-              <input
-                type="text"
-                name="substitutes"
-                value={formData.substitutes}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.substitutes}
+              title="Sustituye a"
+              type="text"
+              name="substitutes"
+              required={false}
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Candidato Interno a Considerar
-              </label>
-              <input
-                type="text"
-                name="internalCandidate"
-                value={formData.internalCandidate}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.internalCandidate}
+              title="Candidato Interno a Considerar"
+              type="text"
+              name="internalCandidate"
+              required={false}
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Horario *
-              </label>
-              <input
-                type="text"
-                name="schedule"
-                value={formData.schedule}
-                onChange={handleChange}
-                placeholder="Ej: 8:00 AM - 5:00 PM"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
+            <FormField
+              onChange={handleChange}
+              value={formData.schedule}
+              title="Horario *"
+              type="text"
+              name="schedule"
+              placeholder="Ej: 8:00 AM - 5:00 PM"
+              required={true}
+            />
           </div>
         </div>
 
@@ -299,30 +238,30 @@ const RequisitionForm: React.FC = () => {
           <h3 className="text-xl font-bold text-gray-900 mb-6">Perfil del Puesto</h3>
           
           <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Nivel Académico *
-              </label>
-              <textarea
-                name="academicLevel"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <FormField
+                onChange={handleChange}
                 value={formData.academicLevel}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
+                title="Nivel Académico *"
+                type="text"
+                name="academicLevel"
+                required={true}
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Estudios Especiales
-              </label>
-              <textarea
-                name="specialStudies"
-                value={formData.specialStudies}
+              <FormField
                 onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={formData.specialStudies}
+                title="Estudios Especiales"
+                type="text"
+                name="specialStudies"
+                required={false}
+              />
+              <FormField
+                onChange={handleChange}
+                value={formData.languages}
+                title="Idiomas"
+                type="text"
+                name="languages"
+                required={false}
               />
             </div>
 
@@ -331,51 +270,29 @@ const RequisitionForm: React.FC = () => {
                 Experiencia Laboral *
               </label>
               <textarea
-                name="workExperience"
+                name="workExperience" 
                 value={formData.workExperience}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Idiomas
-              </label>
-              <textarea
-                name="languages"
-                value={formData.languages}
                 onChange={handleChange}
                 rows={2}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Manejo de Equipos/Software
-              </label>
-              <textarea
-                name="softwareSkills"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <FormField
+                onChange={handleChange}
                 value={formData.softwareSkills}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                title="Manejo de Equipos/Software"
+                type="text"
+                name="softwareSkills"
+                required={false}
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Otros Conocimientos
-              </label>
-              <textarea
-                name="otherKnowledge"
-                value={formData.otherKnowledge}
+              <FormField
                 onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={formData.otherKnowledge}
+                title="Otros Conocimientos"
+                type="text"
+                name="otherKnowledge"
+                required={false}
               />
             </div>
           </div>
