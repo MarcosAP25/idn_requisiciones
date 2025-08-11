@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, Requisition } from '../types';
+import { User, Requisition, CandidateProfile } from '../types';
 import toast from 'react-hot-toast';
 
 //creacion del contexto
@@ -13,6 +13,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [requisitions, setRequisitions] = useState<Requisition[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
 
 
   useEffect(()=> {

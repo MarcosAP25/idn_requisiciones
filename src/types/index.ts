@@ -43,3 +43,63 @@ export interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
 }
+
+export interface CandidateProfile {
+  id: string;
+  personalInfo: {
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    birthDate: string;
+    nationality: string;
+    maritalStatus: string;
+    idNumber: string;
+  };
+  professionalSummary: string;
+  workExperience: {
+    id: string;
+    company: string;
+    position: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+    isCurrentJob: boolean;
+  }[];
+  education: {
+    id: string;
+    institution: string;
+    degree: string;
+    field: string;
+    startDate: string;
+    endDate: string;
+    gpa?: string;
+  }[];
+  skills: {
+    technical: string[];
+    languages: {
+      language: string;
+      level: string;
+    }[];
+    soft: string[];
+  };
+  certifications: {
+    id: string;
+    name: string;
+    issuer: string;
+    date: string;
+    expiryDate?: string;
+  }[];
+  references: {
+    id: string;
+    name: string;
+    position: string;
+    company: string;
+    phone: string;
+    email: string;
+  }[];
+  createdBy: string;
+  status: 'active' | 'inactive' | 'employed' | 'archived' | 'rejected';
+  createdAt: string;
+  updatedAt: string;
+}

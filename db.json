@@ -47,5 +47,103 @@
       "createdBy": "",
       "status": "approved"
     }
+  ],
+  "candidateProfiles": [
+    {
+      "id": "cand-012345",
+      "personalInfo": {
+        "fullName": "Ana García Pérez",
+        "email": "ana.garcia@email.com",
+        "phone": "+34 600 123 456",
+        "address": "Calle Falsa 123, Madrid, España",
+        "birthDate": "1990-05-15",
+        "nationality": "Española",
+        "maritalStatus": "Soltera",
+        "idNumber": "12345678A"
+      },
+      "professionalSummary": "Desarrolladora de software con 8 años de experiencia en la creación de aplicaciones web escalables. Experta en tecnologías front-end y back-end, con un enfoque en el rendimiento y la experiencia de usuario. Busco un puesto donde pueda aplicar mis habilidades para resolver problemas complejos y contribuir al crecimiento de la empresa.",
+      "workExperience": [
+        {
+          "id": "work-exp-001",
+          "company": "Tech Solutions S.L.",
+          "position": "Senior Software Developer",
+          "startDate": "2018-09-01",
+          "endDate": "2025-08-11",
+          "description": "Lideré un equipo de desarrollo para crear una nueva plataforma de e-commerce, mejorando la velocidad de carga en un 40% y la satisfacción del cliente.",
+          "isCurrentJob": true
+        },
+        {
+          "id": "work-exp-002",
+          "company": "Innovatech Corp.",
+          "position": "Junior Developer",
+          "startDate": "2015-06-01",
+          "endDate": "2018-08-31",
+          "description": "Participé en el desarrollo de la interfaz de usuario para una aplicación móvil, implementando nuevas características y corrigiendo errores.",
+          "isCurrentJob": false
+        }
+      ],
+      "education": [
+        {
+          "id": "edu-001",
+          "institution": "Universidad Politécnica de Madrid",
+          "degree": "Grado en Ingeniería Informática",
+          "field": "Ingeniería de Software",
+          "startDate": "2011-09-01",
+          "endDate": "2015-06-30",
+          "gpa": "3.8"
+        }
+      ],
+      "skills": {
+        "technical": [
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Node.js",
+          "SQL",
+          "MongoDB",
+          "Docker",
+          "AWS"
+        ],
+        "languages": [
+          {
+            "language": "Español",
+            "level": "Nativo"
+          },
+          {
+            "language": "Inglés",
+            "level": "Avanzado"
+          }
+        ],
+        "soft": [
+          "Liderazgo",
+          "Comunicación",
+          "Resolución de problemas",
+          "Trabajo en equipo"
+        ]
+      },
+      "certifications": [
+        {
+          "id": "cert-001",
+          "name": "AWS Certified Developer - Associate",
+          "issuer": "Amazon Web Services",
+          "date": "2020-03-10",
+          "expiryDate": "2023-03-10"
+        }
+      ],
+      "references": [
+        {
+          "id": "ref-001",
+          "name": "Juan Martínez",
+          "position": "CTO",
+          "company": "Tech Solutions S.L.",
+          "phone": "+34 600 987 654",
+          "email": "juan.martinez@techsolutions.com"
+        }
+      ],
+      "createdBy": "user-007",
+      "status": "active",
+      "createdAt": "2025-08-11T14:30:00Z",
+      "updatedAt": "2025-08-11T14:30:00Z"
+    }
   ]
 }
