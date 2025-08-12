@@ -10,72 +10,93 @@ import RequestsList from './pages/RequestsList';
 import UserManagement from './pages/UserManagement';
 import CompanyInfo from './pages/CompanyInfo';
 import { Toaster } from 'react-hot-toast';
+import CVForm from './pages/CVForm';
+import CandidateProfiles from './pages/CandidateProfile';
+import { AppProvider } from './context/AppProvider';
 
 function App() {
   return (
-    <AuthProvider>
-      <DataProvider>
-        <Router>
-          <Routes>
-            <Route 
-              path="/dashboard" 
-              element={
-                <PrivateRoute>
-                  <Layout>
-                    <Dashboard />
-                  </Layout>
-                </PrivateRoute>
-              } 
-            />
-            <Route 
-              path="/requisition" 
-              element={
-                <PrivateRoute>
-                  <Layout>
-                    <RequisitionForm />
-                  </Layout>
-                </PrivateRoute>
-              } 
-            />
-            <Route 
-              path="/requests" 
-              element={
-                <PrivateRoute>
-                  <Layout>
-                    <RequestsList />
-                  </Layout>
-                </PrivateRoute>
-              } 
-            />
-            <Route 
-              path="/users" 
-              element={
-                <PrivateRoute adminOnly>
-                  <Layout>
-                    <UserManagement />
-                  </Layout>
-                </PrivateRoute>
-              } 
-            />
-            <Route 
-              path="/company" 
-              element={
-                <PrivateRoute>
-                  <Layout>
-                    <CompanyInfo />
-                  </Layout>
-                </PrivateRoute>
-              } 
-            />
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
-        </Router>
-        <Toaster
-                  position="bottom-right"
-                  reverseOrder={false}
-                />
-      </DataProvider>
-    </AuthProvider>
+    <AppProvider>
+      <Router>
+        <Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/requisition"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <RequisitionForm />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/requests"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <RequestsList />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/cv-form"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <CVForm />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/candidate-profiles"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <CandidateProfiles />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute adminOnly>
+                <Layout>
+                  <UserManagement />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/company"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <CompanyInfo />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </Router>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+      />
+    </AppProvider>
   );
 }
 

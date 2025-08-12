@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { User, Save, Plus, Trash2, FileText } from 'lucide-react';
-import { useData } from '../context/DataContext';
+import { useCandidateProfile } from '../context/CandidateProfileContext';
 import { useAuth } from '../context/AuthContext';
 
 const CVForm: React.FC = () => {
-  const { addCandidateProfile } = useData();
+  const { addCandidateProfile } = useCandidateProfile();
   const { user } = useAuth();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -272,7 +272,7 @@ const CVForm: React.FC = () => {
         references: formData.references.filter(ref => ref.name.trim() !== ''),
         createdBy: user.id,
       };
-
+      console.log('Submitting CV Form:', formData);
       addCandidateProfile(cleanedData);
       setIsSubmitted(true);
       setTimeout(() => {

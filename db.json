@@ -12,7 +12,7 @@
     {
       "name": "Pedro Pascal gutierrez",
       "email": "ppascal@dni.gob.do",
-      "password": "",
+      "password": "user123",
       "role": "user",
       "status": 1,
       "id": "fe30"
