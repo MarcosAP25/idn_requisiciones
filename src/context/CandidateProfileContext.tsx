@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { CandidateProfile } from "../types";
+import toast from "react-hot-toast";
 
 interface CandidateProfileContext{
     candidateProfiles: CandidateProfile[];
@@ -33,8 +34,21 @@ export const CandidateProfileprovider: React.FC<{ children: React.ReactNode }> =
     });
 
     const addCandidateProfile = async (profile: Omit<CandidateProfile, 'id' | 'createdAt' | 'updatedAt'>) => {
-
-    }
+        fetch("http://localhost:3000/candidateProfiles", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(profile),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+        setCandidateProfiles((prev) => [...prev, data]);
+        toast.success('Perfil de candidato creado exitosamente.');
+        }).catch((error) => {
+        toast.error('Error al crear el perfil de candidato.');
+        })
+    };
 
     const updateCandidateProfile = async (id: string, profile: Partial<CandidateProfile>) => {
         try {

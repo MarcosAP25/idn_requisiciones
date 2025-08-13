@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Marcos Almonte",
       "password": "admin123",
       "email": "admin@dni.gob.do",
@@ -144,6 +144,77 @@
       "status": "active",
       "createdAt": "2025-08-11T14:30:00Z",
       "updatedAt": "2025-08-11T14:30:00Z"
+    },
+    {
+      "id": "ec76",
+      "personalInfo": {
+        "fullName": "Id dignissimos alia",
+        "email": "pafegu@mailinator.com",
+        "phone": "+1 (649) 225-2746",
+        "address": "Delectus esse neque",
+        "birthDate": "2003-10-12",
+        "nationality": "Duis optio velit nu",
+        "maritalStatus": "Soltero/a",
+        "idNumber": "Labore id ut ut min"
+      },
+      "professionalSummary": "Sed dolore quia magn",
+      "workExperience": [
+        {
+          "id": "1",
+          "company": "Odio dolore atque vo",
+          "position": "Quis omnis quas quia",
+          "startDate": "Magni dolores occaec",
+          "endDate": "Eaque Nam mollit qui",
+          "description": "Eveniet numquam qui",
+          "isCurrentJob": true
+        }
+      ],
+      "education": [
+        {
+          "id": "1",
+          "institution": "Quis nihil ullamco p",
+          "degree": "Et deserunt impedit",
+          "field": "Rerum vel illo ipsa",
+          "startDate": "Et quas Nam vel temp",
+          "endDate": "Magnam labore atque ",
+          "gpa": "Aut sed aut facere s"
+        }
+      ],
+      "skills": {
+        "technical": [
+          "Duis pariatur Paria"
+        ],
+        "languages": [
+          {
+            "language": "Sint consectetur s",
+            "level": "Básico"
+          }
+        ],
+        "soft": [
+          "Doloremque iste ipsa"
+        ]
+      },
+      "certifications": [
+        {
+          "id": "1",
+          "name": "Voluptatum id fugia",
+          "issuer": "Et exercitationem po",
+          "date": "1977-04-19",
+          "expiryDate": "2004-06-13"
+        }
+      ],
+      "references": [
+        {
+          "id": "1",
+          "name": "Impedit dolor ut ne",
+          "position": "Perferendis non non ",
+          "company": "Dolor inventore exer",
+          "phone": "+1 (474) 841-8433",
+          "email": "wucihohica@mailinator.com"
+        }
+      ],
+      "status": "active",
+      "createdBy": 1
     }
   ]
 }

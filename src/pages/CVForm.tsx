@@ -272,7 +272,6 @@ const CVForm: React.FC = () => {
         references: formData.references.filter(ref => ref.name.trim() !== ''),
         createdBy: user.id,
       };
-      console.log('Submitting CV Form:', formData);
       addCandidateProfile(cleanedData);
       setIsSubmitted(true);
       setTimeout(() => {
